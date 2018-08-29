@@ -10,5 +10,5 @@
     "fixed": {},
     "multiline": ["description"],
     "optional": ["description", "type"],
-    "form": "[<type> - <id>] <subject>\nRev: <reviewer>\n\n<description>"
+    "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
 }

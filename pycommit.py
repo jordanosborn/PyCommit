@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from subprocess import call
 from sys import argv
-import json
+import json, re
 
 #TODO: Add formatting options within angled brackets
 class config:
@@ -26,8 +26,9 @@ defaults = {
         "fixed": {},
         "multiline": ["description"],
         "optional": ["description"],
-        "form": "[<type> - <id>] <subject>\nRev: <reviewer>\n\n<description>"
+        "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
     }
+reg = re.compile(r"(<([^>]*?)>(\w*?)<([^>]*?)>)")
 
 c = config(defaults)
 try:
@@ -63,12 +64,16 @@ def pretty_enum(ls):
     return s
 
 def prettify(out):
-    #if any blank move surrounding newlines
-    p = form
     for k in multiline:
         out[k] = "\n".join(out[k])
-    for k, v in out.items():
-        p = p.replace("<" + k + ">", enums[k][int(v)] if k in enums else v)
+    p = form
+    for whole, pre, word, post in reg.findall(p):
+        for k, v in out.items():
+            if word == k:
+                ret = enums[k][int(v)] if k in enums else v
+                p = p.replace(whole,  "" if ret == "" else pre + ret + post)
+        p = p.replace(whole, "")
+
     return p
 
 def in_enum_range(i, e):
@@ -102,7 +107,7 @@ while True:
         break
 
 p = prettify(outputs)
-print("Commit message:\n{}".format(p))
+print("\n\nCommit message:\n{}".format(p))
 if p.strip() == "":
     print("Not Committed. Commit message empty")
 elif input("Are you happy with the formatted commit message (y/n)? ")[0] == 'y':
