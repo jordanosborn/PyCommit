@@ -7,7 +7,7 @@ form = ""
 #enum types
 try:
     with open(".pycommit.json", 'r') as f:
-        form = f.read()
+        data = json.loads(f.read())
 except FileNotFoundError:
     inputs = {
         "type": "Type (Bug/Feature/Documentation/Etc): ",
@@ -16,10 +16,12 @@ except FileNotFoundError:
         "reviewer": "Reviewer: ",
         "description": "Description: "
     }
+    enum = {"test":["1", "2"]}
     fixed = {}
     multiline = ["description"]
     optional = ["description"]
     form = "[<type> - <id>] <subject>\nRev: <reviewer>\n\n<description>"
+finally:
 
 
 outputs = {k: "" if k not in multiline else [] for k in inputs.keys()}
@@ -54,7 +56,7 @@ while True:
 p = prettify(outputs)
 print("Commit message:\n{}".format(p))
 if p.strip() == "":
-    raise Exception("Commit message empty")
+    print("Not Committed. Commit message empty")
 elif input("Are you happy with the formatted commit message (y/n)? ")[0] == 'y':
     call(["git", "commit", "-m", p])
     print("Committed")
