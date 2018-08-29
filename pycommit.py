@@ -3,6 +3,7 @@ from subprocess import call
 from sys import argv
 import json
 
+#TODO: Add formatting options within angled brackets
 class config:
     def __init__(self, defaults):
         self._values = defaults
@@ -27,7 +28,7 @@ defaults = {
         "optional": ["description"],
         "form": "[<type> - <id>] <subject>\nRev: <reviewer>\n\n<description>"
     }
-#enum types
+
 c = config(defaults)
 try:
     with open(".pycommit.json", 'r') as f:
@@ -45,10 +46,21 @@ inputs = c.get("inputs")
 fixed = c.get("fixed")
 multiline = c.get("multiline")
 optional = c.get("optional")
+enums = c.get("enums")
 form = c.get("form")
 
 outputs = {k: "" if k not in multiline else [] for k in inputs.keys()}
 outputs.update(fixed)
+
+def pretty_enum(ls):
+    s = "("
+    for i, el in enumerate(ls):
+        s += str(i) + ": " + str(el)
+        if i + 1 == len(ls):
+            s += ")"
+        else:
+            s += ", "
+    return s
 
 def prettify(out):
     #if any blank move surrounding newlines
@@ -56,27 +68,39 @@ def prettify(out):
     for k in multiline:
         out[k] = "\n".join(out[k])
     for k, v in out.items():
-        p = p.replace("<" + k + ">", v)
+        p = p.replace("<" + k + ">", enums[k][int(v)] if k in enums else v)
     return p
+
+def in_enum_range(i, e):
+    return i in list(map(lambda s: str(s), range(0, len(e))))
 
 while True:
     for k, v in inputs.items():
-        opt = k in optional
+        isOptional = k in optional
+        isEnum = k in enums
         if k in multiline:
             print("Type <END> to complete paragraph.")
-            val = input(("(optional) " if opt else "") + v).strip()
-            if val == "" and opt:
+            val = input(("(optional) " if isOptional else "") + v).strip()
+            if val == "" and isOptional:
                 continue
             while val != "<END>":
                 outputs[k].append(val)
                 val = input().strip()
         else:
-            val = input(("(optional) " if opt else "") + v).strip()
-            while val.strip() == "" and not opt:
-                    val = input("(Non-Empty) " + v).strip()
+            notInRange = False
+            val = input(("(optional) " if isOptional else "") + v).strip()
+            if isEnum:
+                notInRange = not in_enum_range(val, enums[k])
+                if notInRange and not (val == "" and isOptional):
+                    print("Choose one of " + pretty_enum(enums[k]))
+            while ((val.strip() == "" or notInRange) and not isOptional) or (val.strip() != "" and notInRange):
+                    val = input(("(Choose-Valid-Enum)" +(" (optional) " if isOptional else "") if notInRange else "(Non-Empty) ")  + v).strip()
+                    if isEnum:
+                        notInRange = not in_enum_range(val, enums[k])
             outputs[k] = val
     if input("Are you happy with this commit message (y/n)? ")[0] == 'y':
         break
+
 p = prettify(outputs)
 print("Commit message:\n{}".format(p))
 if p.strip() == "":
