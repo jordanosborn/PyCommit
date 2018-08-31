@@ -1,3 +1,14 @@
 {
-
+    "inputs": {
+        "type": "Type: ",
+        "subject": "Subject: ",
+        "id": "ID: ",
+        "reviewer": "Reviewer: ",
+        "description": "Description: "
+    },
+    "enums": {"type": ["bug", "feature", "documentation"]},
+    "fixed": {},
+    "multiline": ["description"],
+    "optional": ["description", "type"],
+    "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
 }
