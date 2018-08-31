@@ -1,4 +1,6 @@
 {
+    "precommands": ["git add -u"],
+    "postcommands": ["git pull --rebase", "git push"],
     "inputs": {
         "type": "Type: ",
         "subject": "Subject: ",
