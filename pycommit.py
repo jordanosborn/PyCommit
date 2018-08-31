@@ -2,8 +2,9 @@
 from subprocess import call
 from sys import argv
 import json, re
+from functools import reduce
 
-#TODO: Add formatting options within angled brackets
+#TODO: Add line formatiing multiline items
 class config:
     def __init__(self, defaults):
         self._values = defaults
@@ -115,7 +116,11 @@ print("\n\nCommit message:\n{}".format(p))
 if p.strip() == "":
     print("Not Committed. Commit message empty")
 elif input("Are you happy with the formatted commit message (y/n)? ")[0] == 'y':
-    call(["git", "commit", "-m", p])
+    comc = ["git", "commit", "-m", p]
+    if "-npc" in argv:
+        call(comc)
+    else:
+        call(reduce(lambda s1, s2: s1 + ["&&"] + s2, prec + comc + postc))
     print("Committed")
 else:
     print("Not Committed")
