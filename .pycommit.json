@@ -2,7 +2,7 @@
     "precommands": ["git add -u"],
     "postcommands": ["git pull --rebase", "git push"],
     "inputs": {
-        "type": "Type: ",
+        "type": "Type(Bug=0, Feature=1, Documentation=2, Other=3): ",
         "subject": "Subject: ",
         "id": "ID: ",
         "reviewer": "Reviewer: ",

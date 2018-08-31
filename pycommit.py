@@ -4,7 +4,6 @@ from sys import argv
 import json, re
 from functools import reduce
 
-#TODO: Add line formatiing multiline items text upoer case lower case formatting 
 class config:
     def __init__(self, defaults):
         self._values = defaults
