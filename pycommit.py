@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!<python3_path>
 from subprocess import call
 from sys import argv
 import json, re
