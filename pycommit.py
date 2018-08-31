@@ -75,7 +75,7 @@ def prettify(out):
     for whole, pre, word, post in reg.findall(p):
         for k, v in out.items():
             if word == k:
-                ret = enums[k][int(v)] if k in enums else v
+                ret = enums[k][int(v)] if k in enums and v != '' else v
                 p = p.replace(whole,  "" if ret == "" else pre + ret + post)
         p = p.replace(whole, "")
 
