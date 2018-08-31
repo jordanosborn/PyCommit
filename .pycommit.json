@@ -11,6 +11,6 @@
     "enums": {"type": ["bug", "feature", "documentation"]},
     "fixed": {},
     "multiline": ["description"],
-    "optional": ["description", "type"],
+    "optional": ["description", "reviewer"],
     "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
 }

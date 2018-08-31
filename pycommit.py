@@ -120,7 +120,7 @@ elif input("Are you happy with the formatted commit message (y/n)? ")[0] == 'y':
     if "-npc" in argv:
         call(comc)
     else:
-        call(reduce(lambda s1, s2: s1 + ["&&"] + s2, prec + comc + postc))
+        call(reduce(lambda s1, s2: s1 + ["&&"] + s2, precommands + comc + postcommands))
     print("Committed")
 else:
     print("Not Committed")
