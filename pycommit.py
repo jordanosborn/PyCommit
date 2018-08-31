@@ -4,7 +4,7 @@ from sys import argv
 import json, re
 from functools import reduce
 
-#TODO: Add line formatiing multiline items
+#TODO: Add line formatiing multiline items text upoer case lower case formatting 
 class config:
     def __init__(self, defaults):
         self._values = defaults
@@ -19,16 +19,16 @@ defaults = {
         "precommands": ["git add -u"],
         "postcommands": ["git pull --rebase", "git push"],
         "inputs": {
-            "type": "Type (Bug/Feature/Documentation/Etc): ",
+            "type": "Type (Bug=0, Feature=1, Documentation=2, Other=3): ",
             "id": "ID: ",
             "subject": "Subject: ",
             "reviewer": "Reviewer: ",
             "description": "Description: "
         },
-        "enums": {},
+        "enums": {"type": ["bug", "feature", "documentation", "other"]},
         "fixed": {},
         "multiline": ["description"],
-        "optional": ["description"],
+        "optional": ["description", "reviewer"],
         "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
     }
 reg = re.compile(r"(<([^>]*?)>(\w*?)<([^>]*?)>)")

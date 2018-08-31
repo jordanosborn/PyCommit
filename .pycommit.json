@@ -8,8 +8,8 @@
         "reviewer": "Reviewer: ",
         "description": "Description: "
     },
-    "enums": {"type": ["bug", "feature", "documentation"]},
-    "fixed": {},
+    "enums": {"type": ["bug", "feature", "documentation", "other"]},
+    "fixed": {"email": "user@example.com"},
     "multiline": ["description"],
     "optional": ["description", "reviewer"],
     "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
