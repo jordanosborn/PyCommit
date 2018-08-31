@@ -29,7 +29,7 @@ defaults = {
         "fixed": {},
         "multiline": ["description"],
         "optional": ["description", "reviewer"],
-        "form": "[<>type<> - <>id<>] <>subject<>\nRev: <>reviewer<><\n\n>description<>"
+        "form": "[<>type<> - <>id<>] <>subject<> <\nRev: >reviewer<><\n\n>description<>"
     }
 reg = re.compile(r"(<([^>]*?)>(\w*?)<([^>]*?)>)")
 
