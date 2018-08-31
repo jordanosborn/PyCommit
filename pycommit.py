@@ -15,6 +15,8 @@ class config:
             self._values[k] = v
 
 defaults = {
+        "precommands": ["git add -u"],
+        "postcommands": ["git pull --rebase", "git push"],
         "inputs": {
             "type": "Type (Bug/Feature/Documentation/Etc): ",
             "id": "ID: ",
@@ -49,6 +51,8 @@ multiline = c.get("multiline")
 optional = c.get("optional")
 enums = c.get("enums")
 form = c.get("form")
+precommands = list(map(lambda s: s.split()), c.get("precommands")))
+postcommands = list(map(lambda s: s.split()), c.get("postcommands")))
 
 outputs = {k: "" if k not in multiline else [] for k in inputs.keys()}
 outputs.update(fixed)
