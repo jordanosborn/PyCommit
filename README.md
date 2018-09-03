@@ -23,3 +23,5 @@ If the template is satisfactory your changes will be commited automatically
 Add more complex formatting options including format of new lines, upper/lower case operators etc
 
 Placeholders that run commands and use stdout as their input ( list files to be commuted). Run functions on inputs using eval
+
+Add spellcheck based on locale in .pycommit.jspn 
