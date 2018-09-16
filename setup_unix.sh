@@ -7,7 +7,7 @@ cp pycommit.py /usr/local/bin/pycommit
 source ~/.bashrc
 if [ $# -eq 1]
   then
-    cp .pycommit.py $1/.pycommit.py
+    cp .pycommit.json $1/.pycommit.json
     cd $1
-    nano .pycommit.py
+    nano .pycommit.json
 fi
