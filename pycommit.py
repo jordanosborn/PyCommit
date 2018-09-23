@@ -1,9 +1,12 @@
 #!<python3_path>
-from subprocess import call
+from subprocess import call, DEVNULL
 from sys import argv
 import json, re
 from functools import reduce
 
+if call(["git", "status"], stdout=DEVNULL, stderr=DEVNULL) != 0:
+    print("Current folder is not a git repo.")
+    exit()
 class config:
     def __init__(self, defaults):
         self._values = defaults
